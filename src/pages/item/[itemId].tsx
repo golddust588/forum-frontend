@@ -11,34 +11,34 @@ import { useEffect, useState } from "react";
 //   removeItem: (id: string) => void;
 // };
 
-const Item = () => {
-  const [item, setItem] = useState(null);
+// const Item = () => {
+//   const [item, setItem] = useState(null);
 
-  const router = useRouter();
+//   const router = useRouter();
 
-  const fetchItem = async (itemId: string) => {
-    const item = await axios.get(
-      `https://hp-api.onrender.com/api/character/${itemId}`
-    );
+//   const fetchItem = async (itemId: string) => {
+//     const item = await axios.get(
+//       `https://hp-api.onrender.com/api/character/${itemId}`
+//     );
 
-    setItem(item.data[0]);
-  };
+//     setItem(item.data[0]);
+//   };
 
-  useEffect(() => {
-    router.query.itemId && fetchItem(router.query.itemId as string);
-  }, [router.query]);
+//   useEffect(() => {
+//     router.query.itemId && fetchItem(router.query.itemId as string);
+//   }, [router.query]);
 
-  return (
-    <div>
-      {item && (
-        <>
-          <div>{`Name of the actor: ${item.actor}`}</div>
-          <div>{`Name of the actor in series: ${item.name}`}</div>
-          <div>{`Species: ${item.species}`}</div>
-        </>
-      )}
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       {item && (
+//         <>
+//           <div>{`Name of the actor: ${item.actor}`}</div>
+//           <div>{`Name of the actor in series: ${item.name}`}</div>
+//           <div>{`Species: ${item.species}`}</div>
+//         </>
+//       )}
+//     </div>
+//   );
+// };
 
-export default Item;
+// export default Item;

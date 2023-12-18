@@ -3,14 +3,15 @@ import React from "react";
 import Link from "next/link";
 
 type NavBarType = {
-  isLoggedIn: boolean;
+  isUserLoggedIn: boolean;
+  onLogout: () => void;
   name: string;
 };
 
-const NavBar: React.FC<NavBarType> = ({ isLoggedIn, name }) => {
+const NavBar: React.FC<NavBarType> = ({ isUserLoggedIn, onLogout, name }) => {
   return (
     <div className={styles.wrapper}>
-      {isLoggedIn ? (
+      {isUserLoggedIn ? (
         <>
           <ul>
             <li>
@@ -27,7 +28,9 @@ const NavBar: React.FC<NavBarType> = ({ isLoggedIn, name }) => {
           </ul>
           <ul>
             <li>
-              <Link href="/login">Logout</Link>
+              <Link href="/login" onClick={onLogout}>
+                Logout
+              </Link>
             </li>
           </ul>
         </>

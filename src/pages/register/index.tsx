@@ -6,7 +6,7 @@ import PageTemplate from "@/components/organisms/PageTemplate/PageTemplate";
 import styles from "./styles.module.css";
 import Button from "@/components/atoms/Button/Button";
 
-const Login = () => {
+const Register = () => {
   const router = useRouter();
 
   const [email, setEmail] = useState<string>("");
@@ -61,4 +61,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
