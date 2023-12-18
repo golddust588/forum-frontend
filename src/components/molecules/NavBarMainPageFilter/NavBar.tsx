@@ -1,24 +1,24 @@
 import styles from "./navBar.module.css";
 import React from "react";
 
-const Footer = () => {
+const NavBar = () => {
   return (
     <div className={styles.wrapper}>
       <ul>
         <li>
-          <a href="#">Tops</a>
+          <a href="#">All questions</a>
         </li>
         <li>
           <a className={styles.borders} href="#">
-            Bottoms
+            Answered
           </a>
         </li>
         <li>
-          <a href="#">Sale</a>
+          <a href="#">Most popular</a>
         </li>
       </ul>
     </div>
   );
 };
 
-export default Footer;
+export default NavBar;
