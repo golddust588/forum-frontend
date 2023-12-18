@@ -3,7 +3,6 @@ import axios from "axios";
 import cookie from "js-cookie";
 import { useRouter } from "next/router";
 import PageTemplate from "@/components/organisms/PageTemplate/PageTemplate";
-import Link from "next/link";
 import styles from "./styles.module.css";
 import Button from "@/components/atoms/Button/Button";
 
@@ -12,20 +11,23 @@ const Login = () => {
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
 
-  const onLogin = async () => {
+  const onRegister = async () => {
     const body = {
       email: email,
       password: password,
+      name: name,
     };
 
     const response = await axios.post(
-      `${process.env.SERVER_URL}/users/login`,
+      `${process.env.SERVER_URL}/users/register`,
       body
     );
 
     if (response.status === 200) {
       cookie.set("jwt_token", response.data.token);
+      alert("Registration successful");
       router.push("/");
     }
 
@@ -37,20 +39,22 @@ const Login = () => {
       <PageTemplate>
         <div className={styles.form}>
           <input
-            placeholder="email"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            placeholder="password"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
           />
-          <Button text="Login" onClick={onLogin} type="POST" />
-          <Link className={styles.link} href="/register">
-            New user? Click here to register!
-          </Link>
+          <input
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Button text="Register" onClick={onRegister} type="POST" />
         </div>
       </PageTemplate>
     </div>
