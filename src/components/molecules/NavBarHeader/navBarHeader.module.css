@@ -1,0 +1,39 @@
+.wrapper {
+  padding-right: 40px;
+  display: flex;
+}
+
+.wrapper ul {
+  gap: 0.8rem;
+  list-style: none;
+}
+
+.wrapper ul li a {
+  font-size: 1.3rem;
+  color: black;
+  text-decoration: none;
+}
+
+.wrapper ul li a:hover {
+  text-decoration: underline;
+}
+
+.name {
+  padding-top: 0.25rem;
+  padding-left: 2rem;
+  color: blueviolet;
+}
+
+.mobileWrapper {
+  padding-right: 40px;
+}
+
+.mobileWrapper ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+.mobileWrapper ul li a img {
+  height: 1.5rem;
+}
