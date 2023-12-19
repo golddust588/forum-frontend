@@ -6,6 +6,7 @@ import PageTemplate from "@/components/organisms/PageTemplate/PageTemplate";
 import Link from "next/link";
 import styles from "./styles.module.css";
 import Button from "@/components/atoms/Button/Button";
+import validation from "./validation";
 
 const Login = () => {
   const router = useRouter();
@@ -14,22 +15,29 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
 
   const onLogin = async () => {
-    const body = {
-      email: email,
-      password: password,
-    };
+    if (validation(email, password)) {
+      const body = {
+        email: email,
+        password: password,
+      };
 
-    const response = await axios.post(
-      `${process.env.SERVER_URL}/users/login`,
-      body
-    );
+      try {
+        const response = await axios.post(
+          `${process.env.SERVER_URL}/users/login`,
+          body
+        );
 
-    if (response.status === 200) {
-      cookie.set("jwt_token", response.data.token);
-      router.push("/");
+        if (response.status === 200) {
+          cookie.set("jwt_token", response.data.jwt_token);
+          cookie.set("name", response.data.name);
+          router.push("/");
+        }
+        console.log("response", response);
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Please enter correct email or password");
+      }
     }
-
-    console.log("response", response);
   };
 
   return (

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import PageTemplate from "@/components/organisms/PageTemplate/PageTemplate";
 import styles from "./styles.module.css";
 import Button from "@/components/atoms/Button/Button";
+import validation from "./validation";
 
 const Register = () => {
   const router = useRouter();
@@ -14,24 +15,27 @@ const Register = () => {
   const [name, setName] = useState<string>("");
 
   const onRegister = async () => {
-    const body = {
-      email: email,
-      password: password,
-      name: name,
-    };
+    if (validation(email, password, name)) {
+      const body = {
+        email: email,
+        password: password,
+        name: name,
+      };
 
-    const response = await axios.post(
-      `${process.env.SERVER_URL}/users/register`,
-      body
-    );
+      const response = await axios.post(
+        `${process.env.SERVER_URL}/users/register`,
+        body
+      );
 
-    if (response.status === 200) {
-      cookie.set("jwt_token", response.data.token);
-      alert("Registration successful");
-      router.push("/");
+      if (response.status === 200) {
+        cookie.set("jwt_token", response.data.jwt_token);
+        cookie.set("name", response.data.name);
+        alert("Registration successful");
+        router.push("/");
+      }
+
+      console.log("response", response);
     }
-
-    console.log("response", response);
   };
 
   return (

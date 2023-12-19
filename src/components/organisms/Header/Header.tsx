@@ -20,12 +20,13 @@ const Header = () => {
     }
   }, []);
 
-  const router = useRouter();
-
   const onLogout = () => {
     cookie.remove("jwt_token");
-    // router.push("/login");
   };
+
+  const savedName: string | undefined = cookie.get("name");
+
+  const greeting: string = `Hello, ${savedName ?? "Guest"}!`;
 
   return (
     <header className={styles.wrapper}>
@@ -34,7 +35,7 @@ const Header = () => {
         <NavBar
           isUserLoggedIn={isUserLoggedIn}
           onLogout={onLogout}
-          name={"Kazys"}
+          greeting={greeting}
         />
       </div>
       <div className={styles.rightNavMobile}>
