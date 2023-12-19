@@ -30,6 +30,7 @@ const Register = () => {
       if (response.status === 200) {
         cookie.set("jwt_token", response.data.jwt_token);
         cookie.set("name", response.data.name);
+        cookie.set("user_id", response.data.user_id);
         alert("Registration successful");
         router.push("/");
       }

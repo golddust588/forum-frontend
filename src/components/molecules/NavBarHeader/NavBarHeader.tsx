@@ -19,7 +19,7 @@ const NavBar: React.FC<NavBarType> = ({
         <>
           <ul>
             <li>
-              <Link href="/login">My questions</Link>
+              <Link href="/myQuestions">My questions</Link>
             </li>
           </ul>
           <ul>

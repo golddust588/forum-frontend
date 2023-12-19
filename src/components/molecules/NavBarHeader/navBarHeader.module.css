@@ -1,5 +1,5 @@
 .wrapper {
-  padding-right: 40px;
+  padding-right: 25px;
   display: flex;
 }
 
@@ -20,7 +20,7 @@
 
 .name {
   padding-top: 0.25rem;
-  padding-left: 2rem;
+  padding-left: 1.5rem;
   color: blueviolet;
 }
 

@@ -22,6 +22,8 @@ const Header = () => {
 
   const onLogout = () => {
     cookie.remove("jwt_token");
+    cookie.remove("name");
+    cookie.remove("user_id");
   };
 
   const savedName: string | undefined = cookie.get("name");
