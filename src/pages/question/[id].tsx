@@ -6,6 +6,7 @@ import cookie from "js-cookie";
 import PageTemplate from "@/components/organisms/PageTemplate/PageTemplate";
 import styles from "./styles.module.css";
 import Button from "@/components/atoms/Button/Button";
+import LikeButton from "@/components/atoms/LikeButton/LikeButton";
 
 type QuestionType = {
   _id: string;
@@ -29,6 +30,7 @@ type AnswerType = {
 const Question = () => {
   const [question, setQuestion] = useState<QuestionType | null>(null);
   const [answers, setAnswers] = useState<Array<AnswerType>>([]);
+  const [upvotes, setUpvote] = useState<number | null>(null);
 
   const headers = {
     authorization: cookie.get("jwt_token"),
@@ -42,6 +44,7 @@ const Question = () => {
     );
 
     setQuestion(question.data.question);
+    setUpvote(question.data.question.gained_likes_number);
   };
 
   useEffect(() => {
@@ -111,17 +114,61 @@ const Question = () => {
     console.log(response);
   };
 
+  const onUpvote = async () => {
+    try {
+      const response = await axios.put(
+        `${process.env.SERVER_URL}/question/upvote/${router.query.id}`
+      );
+
+      if (response.status === 200) {
+        setUpvote(response.data.gained_likes_number);
+        console.log(response.data.gained_likes_number);
+        console.log("likes", response);
+        // router.reload();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong");
+    }
+  };
+
+  // useEffect(() => {
+  //   console.log("Upvotes changed:", upvotes);
+  // }, [upvotes]);
+
+  const onDownvote = async () => {
+    try {
+      const response = await axios.put(
+        `${process.env.SERVER_URL}/question/downvote/${router.query.id}`
+      );
+
+      if (response.status === 200) {
+        setUpvote(response.data.gained_likes_number);
+        // setDownvote();
+        // router.reload();
+      }
+      console.log("likes", response);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong");
+    }
+  };
+
   return (
     <PageTemplate>
       <div className={styles.wrapper}>
         {question && (
           <div>
+            <div>
+              <LikeButton type="UP" onClick={onUpvote} />
+              <LikeButton type="DOWN" onClick={onDownvote} />
+              <div className={styles.likes}>{`Upvotes: ${upvotes}`}</div>
+            </div>
+
             <h2>{`${question.question_title}`}</h2>
             <h4>{`${question.question_text}`}</h4>
             <div>{`Date: ${question.date}`}</div>
-            <div
-              className={styles.likes}
-            >{`Likes: ${question.gained_likes_number}`}</div>
+
             <h3>Answers:</h3>
             {answers.map((answer) => {
               return (
