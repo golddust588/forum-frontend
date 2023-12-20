@@ -14,16 +14,21 @@ type QuestionType = {
   date: string;
   gained_likes_number: number;
   user_id: string;
-  // removeItem: (id: string) => void;
+  answers: Array<any> | null;
 };
 
 type AnswerType = {
-  answers: Array<any> | null;
+  _id: string;
+  answer_text: string;
+  date: string;
+  gained_likes_number: number;
+  question_id: string;
+  user_id: string;
 };
 
 const Question = () => {
   const [question, setQuestion] = useState<QuestionType | null>(null);
-  const [answers, setAnswers] = useState<AnswerType | null>(null);
+  const [answers, setAnswers] = useState<Array<AnswerType>>([]);
 
   const headers = {
     authorization: cookie.get("jwt_token"),
@@ -75,7 +80,7 @@ const Question = () => {
 
       if (response.status === 201) {
         setAnswerText("");
-        alert("Answer posted!");
+        // alert("Answer posted!");
         router.reload();
       }
       console.log("response", response);
@@ -83,6 +88,27 @@ const Question = () => {
       console.error("Error:", error);
       alert("Something went wrong");
     }
+  };
+
+  const onDeleteAnswer = async (_id: string) => {
+    console.log(_id);
+    const headers = {
+      authorization: cookie.get("jwt_token"),
+    };
+
+    const response = await axios.delete(
+      `${process.env.SERVER_URL}/answer/${_id}`,
+      {
+        headers,
+      }
+    );
+
+    if (response.status === 200) {
+      alert("Answer deleted!");
+      router.reload();
+    }
+
+    console.log(response);
   };
 
   return (
@@ -97,15 +123,22 @@ const Question = () => {
               className={styles.likes}
             >{`Likes: ${question.gained_likes_number}`}</div>
             <h3>Answers:</h3>
-            {answers &&
-              // @ts-ignore
-              answers.map((answer) => {
-                return (
-                  <div className={styles.answerWrapper} key={answer._id}>
-                    <h4>{answer.answer_text}</h4>
-                  </div>
-                );
-              })}
+            {answers.map((answer) => {
+              return (
+                <div className={styles.answerWrapper} key={answer._id}>
+                  <h4>{answer.answer_text}</h4>
+                  <h4>{answer.date}</h4>
+                  <h4>{`Likes: ${answer.gained_likes_number}`}</h4>
+                  {cookie.get("user_id") === answer.user_id && (
+                    <Button
+                      text="Delete your answer"
+                      type="DELETE"
+                      onClick={() => onDeleteAnswer(answer._id)}
+                    />
+                  )}
+                </div>
+              );
+            })}
 
             <h3>Create your answer:</h3>
             {headers.authorization ? (

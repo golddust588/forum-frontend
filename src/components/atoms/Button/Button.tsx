@@ -4,7 +4,7 @@ import styles from "./button.module.css";
 type ButtonType = {
   text: string;
   onClick: () => void;
-  type: "POST" | "DELETE" | "NONE";
+  type: "POST" | "DELETE";
   //galima vietoj type tiesiog className duoti:
   //className?: string; klaustukas padaro optional pagal TS
 };
@@ -18,7 +18,6 @@ const Button: React.FC<ButtonType> = ({ text, onClick, type }) => {
       ${styles.button} 
       ${type === "POST" && styles.post_button} 
       ${type === "DELETE" && styles.delete_button}
-      ${type === "NONE" && styles.none}
       `}
     >
       {text}
