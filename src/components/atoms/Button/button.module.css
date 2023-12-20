@@ -14,3 +14,7 @@
   background-color: rgb(255, 127, 138);
   transition: 0.2s;
 }
+
+.none {
+  display: none;
+}

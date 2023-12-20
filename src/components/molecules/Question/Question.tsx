@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Button from "@/components/atoms/Button/Button";
 import styles from "./question.module.css";
@@ -11,7 +11,8 @@ type QuestionType = {
   date: string;
   gained_likes_number: number;
   user_id: string;
-  // removeItem: (id: string) => void;
+  answers: [];
+  onDeleteQuestion?: (id: string) => void;
 };
 
 const Question: React.FC<QuestionType> = ({
@@ -20,24 +21,36 @@ const Question: React.FC<QuestionType> = ({
   question_text,
   date,
   gained_likes_number,
-  // removeItem,
+  answers,
+  onDeleteQuestion,
 }) => {
   const onItemClicked = () => {
-    // removeItem(_id);
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this question?"
+    );
+
+    if (isConfirmed) {
+      onDeleteQuestion && onDeleteQuestion(_id);
+    }
   };
+  const router = useRouter();
+  console.log(router.pathname);
 
   return (
     <div className={styles.wrapper}>
       <Link href={`/question/${_id}`} className={styles.wrapper2}>
         <h4>{date}</h4>
         <h4>{`Likes: ${gained_likes_number}`}</h4>
+        <h4>{`Answers: ${answers.length}`}</h4>
         <h2 className={styles.h2}>{question_title}</h2>
         <h4 className={styles.h4}>{question_text}</h4>
 
         {/* {isShowAdress && <h4>{adress}</h4>} */}
       </Link>
       {/* onClick={()=>onItemClicked(id)} kai i funkcija yra paduodamas kintamasis */}
-      <Button text="Delete" onClick={onItemClicked} type="DELETE" />
+      {router.pathname === "/myQuestions" && (
+        <Button text="Delete" onClick={onItemClicked} type="DELETE" />
+      )}
     </div>
   );
 };

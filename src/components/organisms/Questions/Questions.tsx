@@ -5,10 +5,14 @@ import Question from "../../molecules/Question/Question";
 
 type QuestionsType = {
   questions: Array<any> | null;
+  onDeleteQuestion?: (id: string) => void;
   // setQuestions: (filteredQuestions: Array<any>) => void;
 };
 
-const Questions: React.FC<QuestionsType> = ({ questions }) => {
+const Questions: React.FC<QuestionsType> = ({
+  questions,
+  onDeleteQuestion,
+}) => {
   const removeQuestion = (_id: string) => {
     // console.log(id);
     // const filteredQuestions = questions.filter((question) => {
@@ -30,7 +34,8 @@ const Questions: React.FC<QuestionsType> = ({ questions }) => {
                 date={question.date}
                 gained_likes_number={question.gained_likes_number}
                 user_id={question.user_id}
-                // removeItem={removeQuestion}
+                answers={question.answers}
+                onDeleteQuestion={onDeleteQuestion}
               />
             </div>
           );

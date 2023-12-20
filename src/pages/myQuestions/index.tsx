@@ -2,12 +2,14 @@ import styles from "./index.module.css";
 import { useEffect, useState } from "react";
 import PageTemplate from "@/components/organisms/PageTemplate/PageTemplate";
 import cookie from "js-cookie";
+import { useRouter } from "next/router";
 import axios from "axios";
 import Questions from "@/components/organisms/Questions/Questions";
-import NavBar from "@/components/molecules/NavBarMainPageFilter/NavBar";
 
 const Main = () => {
   const [questions, setQuestions] = useState<Array<any> | null>(null);
+
+  const router = useRouter();
 
   const fetchData = async () => {
     try {
@@ -28,6 +30,26 @@ const Main = () => {
     }
   };
 
+  const onDeleteQuestion = async (_id: string) => {
+    const headers = {
+      authorization: cookie.get("jwt_token"),
+    };
+
+    const response = await axios.delete(
+      `${process.env.SERVER_URL}/question/${_id}`,
+      {
+        headers,
+      }
+    );
+
+    if (response.status === 200) {
+      alert("Question deleted!");
+      router.push("/myQuestions");
+    }
+
+    console.log(response);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -36,8 +58,11 @@ const Main = () => {
     <>
       <PageTemplate>
         <div className={`${styles.text}`}>
-          <NavBar />
-          <Questions questions={questions} />
+          {/* <NavBar /> */}
+          <Questions
+            questions={questions}
+            onDeleteQuestion={onDeleteQuestion}
+          />
         </div>
       </PageTemplate>
     </>

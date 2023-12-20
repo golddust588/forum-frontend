@@ -5,11 +5,13 @@ import Link from "next/link";
 type NavBarType = {
   onClickedAllQuestions: () => void;
   onClickedAnswered: () => void;
+  onClickedMostLiked: () => void;
 };
 
 const NavBar: React.FC<NavBarType> = ({
   onClickedAllQuestions,
   onClickedAnswered,
+  onClickedMostLiked,
 }) => {
   return (
     <div className={styles.wrapper}>
@@ -25,7 +27,7 @@ const NavBar: React.FC<NavBarType> = ({
           </a>
         </li>
         <li>
-          <a href="#">Most popular</a>
+          <a onClick={onClickedMostLiked}>Most popular</a>
         </li>
       </ul>
     </div>
