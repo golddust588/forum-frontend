@@ -11,9 +11,14 @@ const Main = () => {
 
   const fetchData = async () => {
     try {
-      console.log(`${process.env.SERVER_URL}/questions`);
+      const headers = {
+        authorization: cookie.get("jwt_token"),
+      };
       const response = await axios.get(
-        `${process.env.SERVER_URL}/questions/${cookie.get("user_id")}`
+        `${process.env.SERVER_URL}/questions/users/${cookie.get("user_id")}`,
+        {
+          headers,
+        }
       );
       console.log(response);
       setQuestions(response.data.questions);

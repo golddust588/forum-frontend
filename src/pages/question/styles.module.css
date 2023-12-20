@@ -1,0 +1,41 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.7rem;
+  width: 70%;
+  margin: auto;
+  margin-top: 4rem;
+  margin-bottom: 12rem;
+  max-width: 500px;
+}
+
+.wrapper h4 {
+  font-weight: 500;
+}
+
+.wrapper h3 {
+  margin-top: 3rem;
+}
+
+.likes {
+}
+
+.answerWrapper {
+  border: solid 1px rgb(80, 14, 94);
+  padding: 0.7rem;
+  margin-top: 1rem;
+}
+
+.answerWrapper h4 {
+  margin: 0;
+}
+
+.answerTextarea {
+  height: 10rem;
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}

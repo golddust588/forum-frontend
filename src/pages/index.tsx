@@ -8,6 +8,9 @@ import NavBar from "../components/molecules/NavBarMainPageFilter/NavBar";
 
 const Main = () => {
   const [questions, setQuestions] = useState<Array<any> | null>(null);
+  const [originalQuestions, setOriginalQuestions] = useState<Array<any> | null>(
+    null
+  );
 
   const fetchData = async () => {
     try {
@@ -15,6 +18,7 @@ const Main = () => {
       const response = await axios.get(`${process.env.SERVER_URL}/questions`);
       console.log(response);
       setQuestions(response.data.questions);
+      setOriginalQuestions(response.data.questions);
       console.log(questions);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -25,11 +29,34 @@ const Main = () => {
     fetchData();
   }, []);
 
+  const onClickedAllQuestions = () => {
+    setQuestions(originalQuestions);
+  };
+
+  const onClickedAnswered = () => {
+    // @ts-ignore
+    const filteredQuestions = questions.filter(
+      (question) => question.answers.length > 0
+    );
+    setQuestions(filteredQuestions);
+  };
+
+  // const onClickedMostLiked = () => {
+  //   // Sort questions based on the most gained_likes_number
+  //   const sortedQuestions = [...originalQuestions].sort((a, b) => b.gained_likes_number - a.gained_likes_number);
+
+  //   // Update the state with the sorted questions
+  //   setQuestions(sortedQuestions);
+
   return (
     <>
       <PageTemplate>
         <div className={`${styles.text}`}>
-          <NavBar />
+          <NavBar
+            onClickedAllQuestions={onClickedAllQuestions}
+            onClickedAnswered={onClickedAnswered}
+            onClickedMostLiked={onClickedAnswered}
+          />
           <Questions questions={questions} />
         </div>
       </PageTemplate>

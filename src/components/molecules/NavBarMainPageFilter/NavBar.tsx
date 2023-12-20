@@ -1,15 +1,26 @@
 import styles from "./navBar.module.css";
 import React from "react";
+import Link from "next/link";
 
-const NavBar = () => {
+type NavBarType = {
+  onClickedAllQuestions: () => void;
+  onClickedAnswered: () => void;
+};
+
+const NavBar: React.FC<NavBarType> = ({
+  onClickedAllQuestions,
+  onClickedAnswered,
+}) => {
   return (
     <div className={styles.wrapper}>
       <ul>
         <li>
-          <a href="#">All questions</a>
+          <Link href="/" onClick={onClickedAllQuestions}>
+            All questions
+          </Link>
         </li>
         <li>
-          <a className={styles.borders} href="#">
+          <a className={styles.borders} onClick={onClickedAnswered} href="#">
             Answered
           </a>
         </li>
