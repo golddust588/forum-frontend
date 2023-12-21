@@ -43,7 +43,12 @@ const Main = () => {
     );
 
     if (response.status === 200) {
-      alert("Question deleted!");
+      setQuestions((prevQuestions) => {
+        return (
+          prevQuestions &&
+          prevQuestions.filter((question) => question._id !== _id)
+        );
+      });
       router.push("/myQuestions");
     }
 
@@ -57,12 +62,15 @@ const Main = () => {
   return (
     <>
       <PageTemplate>
-        <div className={`${styles.text}`}>
-          {/* <NavBar /> */}
-          <Questions
-            questions={questions}
-            onDeleteQuestion={onDeleteQuestion}
-          />
+        <div>
+          {questions && questions.length > 0 ? (
+            <Questions
+              questions={questions}
+              onDeleteQuestion={onDeleteQuestion}
+            />
+          ) : (
+            <h2 className={`${styles.text}`}>No questions yet</h2>
+          )}
         </div>
       </PageTemplate>
     </>

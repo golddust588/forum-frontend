@@ -51,16 +51,13 @@ const Question: React.FC<QuestionType> = ({
           <h4>{`Answers: ${answers.length}`}</h4>
         </div>
         <div className={styles.wrapper4}>
-          <h2>{question_title}</h2>
+          <h2 id="truncatedText">{question_title}</h2>
           <p>{question_text}</p>
           {router.pathname === "/myQuestions" && (
             <Button text="Delete" onClick={onItemClicked} type="DELETE" />
           )}
         </div>
-
-        {/* {isShowAdress && <h4>{adress}</h4>} */}
       </Link>
-      {/* onClick={()=>onItemClicked(id)} kai i funkcija yra paduodamas kintamasis */}
     </div>
   );
 };

@@ -6,20 +6,27 @@
   margin: 0.4rem;
 }
 
-.post_button {
-  /* transform: rotate(180deg);
-  z-index: 1; */
+.up_button {
   rotate: 180deg;
+  position: relative;
 }
 
-.post_button:hover {
+.small_up {
+  width: 15px;
+  rotate: 180deg;
+  margin-left: 20px;
+}
+
+.small_down {
+  width: 15px;
+}
+
+.up_button:hover {
   background-color: rgb(192, 252, 232);
   transition: 0.4s;
-  /* rotate: 180; */
-  /* transform: rotate(180deg); */
 }
 
-.delete_button:hover {
+.down_button:hover {
   background-color: rgb(247, 188, 193);
   transition: 0.4s;
 }

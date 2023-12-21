@@ -30,7 +30,10 @@ type AnswerType = {
 const Question = () => {
   const [question, setQuestion] = useState<QuestionType | null>(null);
   const [answers, setAnswers] = useState<Array<AnswerType>>([]);
-  const [upvotes, setUpvote] = useState<number | null>(null);
+  const [upvotes, changeUpvote] = useState<number | null>(null);
+  const [answerUpvotes, changeAnswerUpvote] = useState<{
+    [key: string]: number;
+  }>({});
 
   const headers = {
     authorization: cookie.get("jwt_token"),
@@ -44,7 +47,7 @@ const Question = () => {
     );
 
     setQuestion(question.data.question);
-    setUpvote(question.data.question.gained_likes_number);
+    changeUpvote(question.data.question.gained_likes_number);
   };
 
   useEffect(() => {
@@ -56,8 +59,15 @@ const Question = () => {
       `${process.env.SERVER_URL}/question/${router.query.id}/answers`
     );
 
+    const fetchedAnswers = answers.data.answers;
+    const upvotesObject = {};
+    fetchedAnswers.forEach((answer: {}) => {
+      //@ts-ignore
+      upvotesObject[answer._id] = answer.gained_likes_number;
+    });
+
     setAnswers(answers.data.answers);
-    console.log(answers);
+    changeAnswerUpvote(upvotesObject);
   };
 
   useEffect(() => {
@@ -122,11 +132,8 @@ const Question = () => {
         );
 
         if (response.status === 200) {
-          setUpvote(response.data.gained_likes_number);
+          changeUpvote(response.data.gained_likes_number);
           cookie.set("liked question id", `${router.query.id}`);
-          // console.log(response.data.gained_likes_number);
-          // console.log("likes", response);
-          // router.reload();
         }
       } catch (error) {
         console.error("Error:", error);
@@ -134,9 +141,6 @@ const Question = () => {
       }
     }
   };
-  // useEffect(() => {
-  //   console.log("Upvotes changed:", upvotes);
-  // }, [upvotes]);
 
   const onDownvote = async () => {
     if (cookie.get("liked question id") !== `${router.query.id}`) {
@@ -146,12 +150,61 @@ const Question = () => {
         );
 
         if (response.status === 200) {
-          setUpvote(response.data.gained_likes_number);
+          changeUpvote(response.data.gained_likes_number);
           cookie.set("liked question id", `${router.query.id}`);
-          // setDownvote();
-          // router.reload();
         }
         console.log("likes", response);
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Something went wrong");
+      }
+    }
+  };
+
+  const onAnswerUpvote = async (_id: string) => {
+    if (cookie.get("liked answer id") !== `${_id}`) {
+      try {
+        const response = await axios.put(
+          `${process.env.SERVER_URL}/answer/upvote/${_id}`,
+          {},
+          {
+            headers,
+          }
+        );
+
+        if (response.status === 200) {
+          changeAnswerUpvote((prevUpvotes) => ({
+            ...prevUpvotes,
+            [_id]: response.data.gained_likes_number,
+          }));
+
+          cookie.set("liked answer id", `${_id}`);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Something went wrong");
+      }
+    }
+  };
+
+  const onAnswerDownvote = async (_id: string) => {
+    if (cookie.get("liked answer id") !== `${_id}`) {
+      try {
+        const response = await axios.put(
+          `${process.env.SERVER_URL}/answer/downvote/${_id}`,
+          {},
+          {
+            headers,
+          }
+        );
+
+        if (response.status === 200) {
+          changeAnswerUpvote((prevUpvotes) => ({
+            ...prevUpvotes,
+            [_id]: response.data.gained_likes_number,
+          }));
+          cookie.set("liked answer id", `${_id}`);
+        }
       } catch (error) {
         console.error("Error:", error);
         alert("Something went wrong");
@@ -184,7 +237,19 @@ const Question = () => {
                 <div className={styles.answerWrapper} key={answer._id}>
                   <h4>{answer.answer_text}</h4>
                   <h5>{answer.date}</h5>
-                  <h5>{`Likes: ${answer.gained_likes_number}`}</h5>
+                  <h5 className={styles.answerUpvotes}>
+                    {`Upvotes: ${answerUpvotes[answer._id] || 0}`}
+                    {/* {`Upvotes: ${answerUpvotes}`} */}
+                    <LikeButton
+                      type="SMALL-UP"
+                      onClick={() => onAnswerUpvote(answer._id)}
+                    />
+                    <LikeButton
+                      type="SMALL-DOWN"
+                      onClick={() => onAnswerDownvote(answer._id)}
+                    />
+                  </h5>
+
                   {cookie.get("user_id") === answer.user_id && (
                     <Button
                       text="Delete your answer"

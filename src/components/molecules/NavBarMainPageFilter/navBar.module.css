@@ -21,6 +21,7 @@
 
 .wrapper ul li a:hover {
   text-decoration: underline;
+  color: rgb(80, 14, 94);
 }
 
 .borders {

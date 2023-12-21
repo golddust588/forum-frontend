@@ -11,7 +11,6 @@ type PageTemplateType = {
   children: ReactNode;
 };
 
-//HOC
 const PageTemplate: React.FC<PageTemplateType> = ({ children }) => {
   return (
     <div className={`${styles.wrapper} ${inter.className}`}>

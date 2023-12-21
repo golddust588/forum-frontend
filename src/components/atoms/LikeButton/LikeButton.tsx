@@ -3,12 +3,9 @@ import styles from "./likeButton.module.css";
 
 type ButtonType = {
   onClick?: () => void;
-  type: "UP" | "DOWN";
-  //galima vietoj type tiesiog className duoti:
-  //className?: string; klaustukas padaro optional pagal TS
+  type: "UP" | "DOWN" | "SMALL-UP" | "SMALL-DOWN";
 };
 
-// ir cia vietoj type className, kuri apsirasom css faile
 const LikeButton: React.FC<ButtonType> = ({ onClick, type }) => {
   return (
     <img
@@ -16,8 +13,10 @@ const LikeButton: React.FC<ButtonType> = ({ onClick, type }) => {
       onClick={onClick}
       className={`
       ${styles.button} 
-      ${type === "UP" && styles.post_button} 
-      ${type === "DOWN" && styles.delete_button}
+      ${type === "UP" && styles.up_button} 
+      ${type === "DOWN" && styles.down_button}
+      ${type === "SMALL-UP" && styles.small_up}
+      ${type === "SMALL-DOWN" && styles.small_down}
       `}
     ></img>
   );

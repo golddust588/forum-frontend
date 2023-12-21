@@ -15,27 +15,31 @@ const Register = () => {
   const [name, setName] = useState<string>("");
 
   const onRegister = async () => {
-    if (validation(email, password, name)) {
-      const body = {
-        email: email,
-        password: password,
-        name: name,
-      };
+    try {
+      if (validation(email, password, name)) {
+        const body = {
+          email: email,
+          password: password,
+          name: name,
+        };
 
-      const response = await axios.post(
-        `${process.env.SERVER_URL}/users/register`,
-        body
-      );
+        const response = await axios.post(
+          `${process.env.SERVER_URL}/users/register`,
+          body
+        );
 
-      if (response.status === 200) {
-        cookie.set("jwt_token", response.data.jwt_token);
-        cookie.set("name", response.data.name);
-        cookie.set("user_id", response.data.user_id);
-        alert("Registration successful");
-        router.push("/");
+        if (response.status === 201) {
+          cookie.set("jwt_token", response.data.jwt_token);
+          cookie.set("name", response.data.name);
+          cookie.set("user_id", response.data.user_id);
+          alert("Registration successful");
+          router.push("/");
+        }
+
+        console.log("response", response);
       }
-
-      console.log("response", response);
+    } catch (error) {
+      console.error("Error during registration:", error);
     }
   };
 

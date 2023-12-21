@@ -24,12 +24,9 @@ const Main = () => {
 
   const fetchData = async () => {
     try {
-      console.log(`${process.env.SERVER_URL}/questions`);
       const response = await axios.get(`${process.env.SERVER_URL}/questions`);
-      console.log(response);
       setQuestions(response.data.questions);
       setOriginalQuestions(response.data.questions);
-      console.log(questions);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
