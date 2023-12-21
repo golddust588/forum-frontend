@@ -41,7 +41,11 @@ const Header = () => {
         />
       </div>
       <div className={styles.rightNavMobile}>
-        <NavBarMobile />
+        <NavBarMobile
+          isUserLoggedIn={isUserLoggedIn}
+          onLogout={onLogout}
+          greeting={greeting}
+        />
       </div>
     </header>
   );

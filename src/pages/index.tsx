@@ -53,12 +53,10 @@ const Main = () => {
 
   const onClickedMostLiked = () => {
     if (originalQuestions) {
-      // Sort questions based on the most gained_likes_number
       const sortedQuestions = [...originalQuestions].sort(
         (a, b) => b.gained_likes_number - a.gained_likes_number
       );
 
-      // Update the state with the sorted questions
       setQuestions(sortedQuestions);
     }
   };

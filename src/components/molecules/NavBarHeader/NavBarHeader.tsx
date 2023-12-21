@@ -1,8 +1,15 @@
 import styles from "./navBarHeader.module.css";
 import React from "react";
+import { useState } from "react";
 import Link from "next/link";
 
 type NavBarType = {
+  isUserLoggedIn: boolean;
+  onLogout: () => void;
+  greeting: string;
+};
+
+type NavBarMobileType = {
   isUserLoggedIn: boolean;
   onLogout: () => void;
   greeting: string;
@@ -49,16 +56,62 @@ const NavBar: React.FC<NavBarType> = ({
   );
 };
 
-const NavBarMobile = () => {
+const NavBarMobile: React.FC<NavBarMobileType> = ({
+  isUserLoggedIn,
+  onLogout,
+  greeting,
+}) => {
+  const [isShowMobileNav, setShowMobileNav] = useState(false);
+
   return (
     <div className={styles.mobileWrapper}>
-      <ul>
-        <li>
-          <a href="#">
-            <img src="https://png.pngtree.com/element_our/20190531/ourmid/pngtree-shopping-cart-convenient-icon-image_1287807.jpg" />
-          </a>
-        </li>
-      </ul>
+      <button
+        className={styles.burgerButton}
+        onClick={() => {
+          setShowMobileNav((prevState) => !prevState);
+        }}
+      >
+        <svg viewBox="0 0 100 80" width="40" height="40" fill="rgb(80, 14, 94)">
+          <rect width="100" height="10"></rect>
+          <rect y="30" width="100" height="10"></rect>
+          <rect y="60" width="100" height="10"></rect>
+        </svg>
+      </button>
+
+      <nav
+        className={`${styles.mobileNav} ${isShowMobileNav && styles.active}`}
+      >
+        {isUserLoggedIn ? (
+          <>
+            <ul>
+              <li>
+                <Link href="/myQuestions">My questions</Link>
+              </li>
+            </ul>
+            <ul>
+              <li>
+                <Link href="/postQuestion">Post a new question</Link>
+              </li>
+            </ul>
+            <ul>
+              <li className={styles.nameMobile}>{greeting}</li>
+            </ul>
+            <ul>
+              <li>
+                <Link href="/login" onClick={onLogout}>
+                  Logout
+                </Link>
+              </li>
+            </ul>
+          </>
+        ) : (
+          <ul>
+            <li>
+              <Link href="/login">Login</Link>
+            </li>
+          </ul>
+        )}
+      </nav>
     </div>
   );
 };

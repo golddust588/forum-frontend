@@ -10,13 +10,13 @@
 }
 
 .post_button:hover {
-  background-color: aquamarine;
-  transition: 0.2s;
+  background-color: rgb(192, 252, 232);
+  transition: 0.4s;
   /* rotate: 180; */
   /* transform: rotate(180deg); */
 }
 
 .delete_button:hover {
-  background-color: rgb(255, 127, 138);
-  transition: 0.2s;
+  background-color: rgb(247, 188, 193);
+  transition: 0.4s;
 }

@@ -24,6 +24,12 @@
   color: blueviolet;
 }
 
+.nameMobile {
+  font-size: 1.5rem;
+  padding: 0;
+  color: aqua;
+}
+
 .mobileWrapper {
   padding-right: 40px;
 }
@@ -36,4 +42,42 @@
 
 .mobileWrapper ul li a img {
   height: 1.5rem;
+}
+
+.burgerButton {
+  cursor: pointer;
+  height: 2.7rem;
+  margin-top: 0.3rem;
+  color: rgb(124, 57, 138);
+}
+
+.mobileNav {
+  display: inline-block;
+  position: absolute;
+  background-color: rgb(124, 57, 138);
+  top: 100px;
+  left: -100%;
+  height: 100%;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.active {
+  left: 0;
+}
+
+.mobileNav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+
+  margin-top: 4rem;
+}
+
+.mobileNav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 2rem;
 }

@@ -39,18 +39,28 @@ const Question: React.FC<QuestionType> = ({
   return (
     <div className={styles.wrapper}>
       <Link href={`/question/${_id}`} className={styles.wrapper2}>
-        <h4>{date}</h4>
-        <h4>{`Likes: ${gained_likes_number}`}</h4>
-        <h4>{`Answers: ${answers.length}`}</h4>
-        <h2 className={styles.h2}>{question_title}</h2>
-        <h4 className={styles.h4}>{question_text}</h4>
+        <div className={styles.wrapper3}>
+          <h4>{date}</h4>
+          <h4
+            className={
+              gained_likes_number < 0 ? styles.negativeLikes : styles.likes
+            }
+          >
+            {`Likes: ${gained_likes_number}`}
+          </h4>
+          <h4>{`Answers: ${answers.length}`}</h4>
+        </div>
+        <div className={styles.wrapper4}>
+          <h2>{question_title}</h2>
+          <p>{question_text}</p>
+          {router.pathname === "/myQuestions" && (
+            <Button text="Delete" onClick={onItemClicked} type="DELETE" />
+          )}
+        </div>
 
         {/* {isShowAdress && <h4>{adress}</h4>} */}
       </Link>
       {/* onClick={()=>onItemClicked(id)} kai i funkcija yra paduodamas kintamasis */}
-      {router.pathname === "/myQuestions" && (
-        <Button text="Delete" onClick={onItemClicked} type="DELETE" />
-      )}
     </div>
   );
 };
