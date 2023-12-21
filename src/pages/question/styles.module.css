@@ -19,6 +19,11 @@
 }
 
 .likes {
+  color: green;
+}
+
+.negativeLikes {
+  color: brown;
 }
 
 .answerWrapper {

@@ -22,7 +22,7 @@ const NavBar: React.FC<NavBarType> = ({
           </Link>
         </li>
         <li>
-          <a className={styles.borders} onClick={onClickedAnswered} href="#">
+          <a className={styles.borders} onClick={onClickedAnswered}>
             Answered
           </a>
         </li>

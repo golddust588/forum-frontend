@@ -6,11 +6,21 @@ import axios from "axios";
 import Questions from "@/components/organisms/Questions/Questions";
 import NavBar from "../components/molecules/NavBarMainPageFilter/NavBar";
 
+type QuestionType = {
+  _id: string;
+  question_title: string;
+  question_text: string;
+  date: string;
+  gained_likes_number: number;
+  user_id: string;
+  answers: [];
+  onDeleteQuestion?: (id: string) => void;
+};
+
 const Main = () => {
   const [questions, setQuestions] = useState<Array<any> | null>(null);
-  const [originalQuestions, setOriginalQuestions] = useState<Array<any> | null>(
-    null
-  );
+  const [originalQuestions, setOriginalQuestions] =
+    useState<Array<QuestionType> | null>(null);
 
   const fetchData = async () => {
     try {
@@ -41,12 +51,17 @@ const Main = () => {
     setQuestions(filteredQuestions);
   };
 
-  // const onClickedMostLiked = () => {
-  //   // Sort questions based on the most gained_likes_number
-  //   const sortedQuestions = [...originalQuestions].sort((a, b) => b.gained_likes_number - a.gained_likes_number);
+  const onClickedMostLiked = () => {
+    if (originalQuestions) {
+      // Sort questions based on the most gained_likes_number
+      const sortedQuestions = [...originalQuestions].sort(
+        (a, b) => b.gained_likes_number - a.gained_likes_number
+      );
 
-  //   // Update the state with the sorted questions
-  //   setQuestions(sortedQuestions);
+      // Update the state with the sorted questions
+      setQuestions(sortedQuestions);
+    }
+  };
 
   return (
     <>
@@ -55,7 +70,7 @@ const Main = () => {
           <NavBar
             onClickedAllQuestions={onClickedAllQuestions}
             onClickedAnswered={onClickedAnswered}
-            onClickedMostLiked={onClickedAnswered}
+            onClickedMostLiked={onClickedMostLiked}
           />
           <Questions questions={questions} />
         </div>

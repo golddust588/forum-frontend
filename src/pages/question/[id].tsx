@@ -115,42 +115,47 @@ const Question = () => {
   };
 
   const onUpvote = async () => {
-    try {
-      const response = await axios.put(
-        `${process.env.SERVER_URL}/question/upvote/${router.query.id}`
-      );
+    if (cookie.get("liked question id") !== `${router.query.id}`) {
+      try {
+        const response = await axios.put(
+          `${process.env.SERVER_URL}/question/upvote/${router.query.id}`
+        );
 
-      if (response.status === 200) {
-        setUpvote(response.data.gained_likes_number);
-        console.log(response.data.gained_likes_number);
-        console.log("likes", response);
-        // router.reload();
+        if (response.status === 200) {
+          setUpvote(response.data.gained_likes_number);
+          cookie.set("liked question id", `${router.query.id}`);
+          // console.log(response.data.gained_likes_number);
+          // console.log("likes", response);
+          // router.reload();
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Something went wrong");
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Something went wrong");
     }
   };
-
   // useEffect(() => {
   //   console.log("Upvotes changed:", upvotes);
   // }, [upvotes]);
 
   const onDownvote = async () => {
-    try {
-      const response = await axios.put(
-        `${process.env.SERVER_URL}/question/downvote/${router.query.id}`
-      );
+    if (cookie.get("liked question id") !== `${router.query.id}`) {
+      try {
+        const response = await axios.put(
+          `${process.env.SERVER_URL}/question/downvote/${router.query.id}`
+        );
 
-      if (response.status === 200) {
-        setUpvote(response.data.gained_likes_number);
-        // setDownvote();
-        // router.reload();
+        if (response.status === 200) {
+          setUpvote(response.data.gained_likes_number);
+          cookie.set("liked question id", `${router.query.id}`);
+          // setDownvote();
+          // router.reload();
+        }
+        console.log("likes", response);
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Something went wrong");
       }
-      console.log("likes", response);
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Something went wrong");
     }
   };
 
@@ -162,7 +167,11 @@ const Question = () => {
             <div>
               <LikeButton type="UP" onClick={onUpvote} />
               <LikeButton type="DOWN" onClick={onDownvote} />
-              <div className={styles.likes}>{`Upvotes: ${upvotes}`}</div>
+              <div
+                className={
+                  upvotes && upvotes < 0 ? styles.negativeLikes : styles.likes
+                }
+              >{`Upvotes: ${upvotes}`}</div>
             </div>
 
             <h2>{`${question.question_title}`}</h2>
