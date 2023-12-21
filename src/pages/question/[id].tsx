@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import cookie from "js-cookie";
@@ -182,7 +182,6 @@ const Question = () => {
         }
       } catch (error) {
         console.error("Error:", error);
-        alert("Something went wrong");
       }
     }
   };
@@ -207,7 +206,6 @@ const Question = () => {
         }
       } catch (error) {
         console.error("Error:", error);
-        alert("Something went wrong");
       }
     }
   };
