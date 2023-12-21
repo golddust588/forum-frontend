@@ -7,11 +7,16 @@
   margin: auto;
   margin-top: 4rem;
   margin-bottom: 12rem;
-  max-width: 500px;
+  max-width: 600px;
+}
+
+.wrapper h2 {
+  font-size: 2rem;
 }
 
 .wrapper h4 {
-  font-weight: 500;
+  font-weight: 400;
+  font-size: 1.2rem;
 }
 
 .wrapper h3 {
@@ -34,6 +39,15 @@
 
 .answerWrapper h4 {
   margin: 0;
+}
+
+.answerWrapper h5 {
+  margin: 0;
+  margin-top: 0.5rem;
+}
+
+.answerWrapper button {
+  margin-top: 0.5rem;
 }
 
 .answerTextarea {

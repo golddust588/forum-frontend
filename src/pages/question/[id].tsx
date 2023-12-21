@@ -176,15 +176,15 @@ const Question = () => {
 
             <h2>{`${question.question_title}`}</h2>
             <h4>{`${question.question_text}`}</h4>
-            <div>{`Date: ${question.date}`}</div>
+            <h5>{`Date: ${question.date}`}</h5>
 
             <h3>Answers:</h3>
             {answers.map((answer) => {
               return (
                 <div className={styles.answerWrapper} key={answer._id}>
                   <h4>{answer.answer_text}</h4>
-                  <h4>{answer.date}</h4>
-                  <h4>{`Likes: ${answer.gained_likes_number}`}</h4>
+                  <h5>{answer.date}</h5>
+                  <h5>{`Likes: ${answer.gained_likes_number}`}</h5>
                   {cookie.get("user_id") === answer.user_id && (
                     <Button
                       text="Delete your answer"

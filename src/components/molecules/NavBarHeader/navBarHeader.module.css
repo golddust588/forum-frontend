@@ -49,6 +49,9 @@
   height: 2.7rem;
   margin-top: 0.3rem;
   color: rgb(124, 57, 138);
+  background-color: white;
+  border: 1px solid rgb(124, 57, 138);
+  border-radius: 5px;
 }
 
 .mobileNav {

@@ -1,12 +1,15 @@
 .button {
   width: 50px;
-  padding: 0.5rem;
+  padding: 0.1rem;
   border-radius: 4px;
   cursor: pointer;
+  margin: 0.4rem;
 }
 
 .post_button {
-  transform: rotate(180deg);
+  /* transform: rotate(180deg);
+  z-index: 1; */
+  rotate: 180deg;
 }
 
 .post_button:hover {
