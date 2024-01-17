@@ -61,14 +61,12 @@ const Main = () => {
   return (
     <>
       <PageTemplate>
-        <div className={`${styles.text}`}>
-          <NavBar
-            onClickedAllQuestions={onClickedAllQuestions}
-            onClickedAnswered={onClickedAnswered}
-            onClickedMostLiked={onClickedMostLiked}
-          />
-          <Questions questions={questions} />
-        </div>
+        <NavBar
+          onClickedAllQuestions={onClickedAllQuestions}
+          onClickedAnswered={onClickedAnswered}
+          onClickedMostLiked={onClickedMostLiked}
+        />
+        <Questions questions={questions} />
       </PageTemplate>
     </>
   );

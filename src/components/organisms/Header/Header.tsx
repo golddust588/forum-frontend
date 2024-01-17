@@ -13,7 +13,7 @@ const Header = () => {
   const [isUserLoggedIn, setUserLoggedIn] = useState(false);
 
   useEffect(() => {
-    const savedCookie = cookie.get("jwt_token");
+    const savedCookie = cookie.get("jwt_token"); //reiktu padaryti, kad gauti is backendo pagal jwt token...
 
     if (savedCookie) {
       setUserLoggedIn(true);
